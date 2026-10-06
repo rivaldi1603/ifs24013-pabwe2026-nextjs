@@ -29,7 +29,7 @@ export default function DetailPage({ postId }: { postId: number }) {
   const [isCoverModalOpen, setIsCoverModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(asyncGetPostDetail(postId));
+    dispatch(asyncGetPostDetail(postId) as any).catch(() => {});
   }, [dispatch, postId]);
 
   const handleLike = () => {
@@ -42,20 +42,20 @@ export default function DetailPage({ postId }: { postId: number }) {
       'Apakah Anda yakin ingin menghapus postingan ini secara permanen?'
     );
     if (result.isConfirmed) {
-      const res = await dispatch(asyncDeletePost(postId));
-      if (asyncDeletePost.fulfilled.match(res)) {
+      try {
+        await dispatch(asyncDeletePost(postId));
         router.push('/');
-      }
+      } catch (error) {}
     }
   };
 
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!commentText.trim()) return;
-    const res = await dispatch(asyncAddComment({ id: postId, comment: commentText }));
-    if (asyncAddComment.fulfilled.match(res)) {
+    try {
+      await dispatch(asyncAddComment({ id: postId, comment: commentText }));
       setCommentText('');
-    }
+    } catch (error) {}
   };
 
   const handleDeleteComment = async (commentId: number) => {

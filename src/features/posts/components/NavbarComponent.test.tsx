@@ -53,3 +53,4 @@ describe('NavbarComponent', () => {
     expect(dispatchSpy).toHaveBeenCalled();
   });
 });
+

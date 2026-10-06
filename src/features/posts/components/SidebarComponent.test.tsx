@@ -28,3 +28,4 @@ describe('SidebarComponent', () => {
     expect(setIsOpen).toHaveBeenCalledWith(false);
   });
 });
+

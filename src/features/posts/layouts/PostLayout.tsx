@@ -25,8 +25,7 @@ export default function PostLayout({ children }: { children: React.ReactNode }) 
 
     // Load profile if not loaded
     if (!profile) {
-      dispatch(asyncGetProfile())
-        .unwrap()
+      (dispatch(asyncGetProfile()) as any)
         .then(() => setIsChecking(false))
         .catch(() => {
           // If profile fetch fails (e.g. token expired), redirect to login

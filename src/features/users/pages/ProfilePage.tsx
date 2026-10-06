@@ -48,14 +48,14 @@ export default function ProfilePage() {
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await dispatch(asyncUpdateProfilePassword({ 
-      old_password: oldPassword, 
-      new_password: newPassword 
-    }));
-    if (asyncUpdateProfilePassword.fulfilled.match(result)) {
+    try {
+      await dispatch(asyncUpdateProfilePassword({ 
+        old_password: oldPassword, 
+        new_password: newPassword 
+      }));
       setOldPassword('');
       setNewPassword('');
-    }
+    } catch (e) {}
   };
 
   const handlePhotoClick = () => {

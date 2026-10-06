@@ -14,8 +14,10 @@ export default function NavbarComponent({ toggleSidebar }: { toggleSidebar: () =
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = async () => {
-    await dispatch(asyncAuthLogout());
-    router.push('/auth/login');
+    try {
+      await dispatch(asyncAuthLogout());
+      router.push('/auth/login');
+    } catch (e) {}
   };
 
   return (

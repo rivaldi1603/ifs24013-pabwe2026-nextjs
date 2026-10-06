@@ -31,10 +31,10 @@ export default function RegisterPage() {
       return;
     }
 
-    const result = await dispatch(asyncAuthRegister({ name, email, password }));
-    if (asyncAuthRegister.fulfilled.match(result)) {
+    try {
+      await dispatch(asyncAuthRegister({ name, email, password }));
       router.push('/auth/login');
-    }
+    } catch (error) {}
   };
 
   return (

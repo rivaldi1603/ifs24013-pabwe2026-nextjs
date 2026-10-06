@@ -14,6 +14,8 @@ vi.mock('next/navigation', () => ({
 
 vi.mock('../../../helpers/toolsHelper', () => ({
   showConfirmDialog: vi.fn(),
+  showErrorDialog: vi.fn(),
+  showSuccessDialog: vi.fn(),
   formatDate: vi.fn().mockReturnValue('1 Jan'),
 }));
 
@@ -77,3 +79,4 @@ describe('DetailPage', () => {
     });
   });
 });
+

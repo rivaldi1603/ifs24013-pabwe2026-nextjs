@@ -6,6 +6,8 @@ import * as postApi from '../api/postApi';
 
 
 
+
+vi.mock('../../../helpers/toolsHelper', () => ({ showSuccessDialog: vi.fn(), showErrorDialog: vi.fn(), showConfirmDialog: vi.fn().mockResolvedValue({ isConfirmed: true }) }));
 describe('ChangeCoverModal', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -29,3 +31,5 @@ describe('ChangeCoverModal', () => {
     });
   });
 });
+
+

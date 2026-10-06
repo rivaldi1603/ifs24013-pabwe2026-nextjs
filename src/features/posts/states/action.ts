@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { 
   getPostsApi, 
   getPostDetailApi, 
@@ -12,173 +11,212 @@ import {
   deleteAllPostsApi 
 } from '../api/postApi';
 import { showSuccessDialog, showErrorDialog } from '../../../helpers/toolsHelper';
+import {
+  setPosts,
+  setPost,
+  setIsPost,
+  setIsPostAdd,
+  setIsPostChange,
+  setIsPostChangeCover,
+  setIsPostDelete,
+  setIsPostLike,
+  setIsPostAddComment,
+  setIsPostDeleteComment,
+  setIsPostDeleteAll
+} from './reducer';
+import type { AppDispatch } from '../../../store';
 
-export const asyncGetPosts = createAsyncThunk(
-  'posts/getPosts',
-  async ({ isMe, search }: { isMe?: boolean; search?: string } = {}, { rejectWithValue }) => {
+export function asyncGetPosts({ isMe, search }: { isMe?: boolean; search?: string } = {}) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPost(true));
     try {
       const { response, data } = await getPostsApi(isMe, search);
-      if (!response.ok) return rejectWithValue(data.message);
-      return data.data.posts; // Array of posts
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      dispatch(setPosts(data.data.posts || []));
+      return data.data.posts;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPost(false));
     }
-  }
-);
+  };
+}
 
-export const asyncGetPostDetail = createAsyncThunk(
-  'posts/getPostDetail',
-  async (id: number, { rejectWithValue }) => {
+export function asyncGetPostDetail(id: number) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPost(true));
     try {
       const { response, data } = await getPostDetailApi(id);
-      if (!response.ok) return rejectWithValue(data.message);
-      return data.data.post; // Post object
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      dispatch(setPost(data.data.post));
+      return data.data.post;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPost(false));
     }
-  }
-);
+  };
+}
 
-export const asyncAddPost = createAsyncThunk(
-  'posts/addPost',
-  async (payload: { description: string }, { rejectWithValue }) => {
+export function asyncAddPost(payload: { description: string }) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostAdd(true));
     try {
       const { response, data } = await addPostApi(payload);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Postingan berhasil ditambahkan');
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostAdd(false));
     }
-  }
-);
+  };
+}
 
-export const asyncUpdatePost = createAsyncThunk(
-  'posts/updatePost',
-  async ({ id, description }: { id: number; description: string }, { rejectWithValue, dispatch }) => {
+export function asyncUpdatePost({ id, description }: { id: number; description: string }) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostChange(true));
     try {
       const { response, data } = await updatePostApi(id, { description });
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Postingan berhasil diperbarui');
-      dispatch(asyncGetPostDetail(id));
+      dispatch(asyncGetPostDetail(id) as any).catch(() => {});
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostChange(false));
     }
-  }
-);
+  };
+}
 
-export const asyncUpdatePostCover = createAsyncThunk(
-  'posts/updatePostCover',
-  async ({ id, file }: { id: number; file: File }, { rejectWithValue, dispatch }) => {
+export function asyncUpdatePostCover({ id, file }: { id: number; file: File }) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostChangeCover(true));
     try {
       const { response, data } = await updatePostCoverApi(id, file);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Cover postingan berhasil diperbarui');
-      dispatch(asyncGetPostDetail(id));
+      dispatch(asyncGetPostDetail(id) as any).catch(() => {});
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostChangeCover(false));
     }
-  }
-);
+  };
+}
 
-export const asyncDeletePost = createAsyncThunk(
-  'posts/deletePost',
-  async (id: number, { rejectWithValue }) => {
+export function asyncDeletePost(id: number) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostDelete(true));
     try {
       const { response, data } = await deletePostApi(id);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Postingan berhasil dihapus');
       return id;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostDelete(false));
     }
-  }
-);
+  };
+}
 
-export const asyncToggleLike = createAsyncThunk(
-  'posts/toggleLike',
-  async (id: number, { rejectWithValue }) => {
+export function asyncToggleLike(id: number) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostLike(true));
     try {
       const { response, data } = await toggleLikeApi(id);
-      if (!response.ok) return rejectWithValue(data.message);
-      // Not showing dialog for like toggle as it should be seamless
+      if (!response.ok) throw new Error(data.message);
       return id;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostLike(false));
     }
-  }
-);
+  };
+}
 
-export const asyncAddComment = createAsyncThunk(
-  'posts/addComment',
-  async ({ id, comment }: { id: number; comment: string }, { rejectWithValue, dispatch }) => {
+export function asyncAddComment({ id, comment }: { id: number; comment: string }) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostAddComment(true));
     try {
       const { response, data } = await addCommentApi(id, { comment });
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
-      dispatch(asyncGetPostDetail(id));
+      dispatch(asyncGetPostDetail(id) as any).catch(() => {});
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostAddComment(false));
     }
-  }
-);
+  };
+}
 
-export const asyncDeleteComment = createAsyncThunk(
-  'posts/deleteComment',
-  async ({ postId, commentId }: { postId: number; commentId: number }, { rejectWithValue, dispatch }) => {
+export function asyncDeleteComment({ postId, commentId }: { postId: number; commentId: number }) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostDeleteComment(true));
     try {
       const { response, data } = await deleteCommentApi(postId, commentId);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
-      dispatch(asyncGetPostDetail(postId));
+      dispatch(asyncGetPostDetail(postId) as any).catch(() => {});
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostDeleteComment(false));
     }
-  }
-);
+  };
+}
 
-export const asyncDeleteAllPosts = createAsyncThunk(
-  'posts/deleteAllPosts',
-  async (_, { rejectWithValue }) => {
+export function asyncDeleteAllPosts() {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsPostDeleteAll(true));
     try {
       const { response, data } = await deleteAllPostsApi();
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Seluruh postingan Anda berhasil dihapus');
       return true;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsPostDeleteAll(false));
     }
-  }
-);
+  };
+}
 
 export { resetPostStatus } from './reducer';

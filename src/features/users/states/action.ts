@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { 
   getUsersApi, 
   getProfileApi, 
@@ -7,92 +6,110 @@ import {
   updateProfilePasswordApi 
 } from '../api/userApi';
 import { showSuccessDialog, showErrorDialog } from '../../../helpers/toolsHelper';
-import { User } from '../../../types';
+import { 
+  setUsers, 
+  setProfile, 
+  setIsProfile, 
+  setIsChangeProfile, 
+  setIsChangeProfilePhoto, 
+  setIsChangeProfilePassword 
+} from './reducer';
+import type { AppDispatch } from '../../../store';
 
-export const asyncGetUsers = createAsyncThunk(
-  'users/getUsers',
-  async (search: string | undefined, { rejectWithValue }) => {
+export function asyncGetUsers(search?: string) {
+  return async (dispatch: AppDispatch) => {
     try {
       const { response, data } = await getUsersApi(search);
       if (!response.ok) {
         showErrorDialog('Gagal mengambil data', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
-      return data.data.users; // Array of Users
+      dispatch(setUsers(data.data.users || []));
+      return data.data.users;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
     }
-  }
-);
+  };
+}
 
-export const asyncGetProfile = createAsyncThunk(
-  'users/getProfile',
-  async (_, { rejectWithValue }) => {
+export function asyncGetProfile() {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsProfile(true));
     try {
       const { response, data } = await getProfileApi();
       if (!response.ok) {
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
-      return data.data.user; // Profile object
+      dispatch(setProfile(data.data.user));
+      return data.data.user;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      dispatch(setProfile(null));
+      throw error;
+    } finally {
+      dispatch(setIsProfile(false));
     }
-  }
-);
+  };
+}
 
-export const asyncUpdateProfile = createAsyncThunk(
-  'users/updateProfile',
-  async (payload: any, { rejectWithValue, dispatch }) => {
+export function asyncUpdateProfile(payload: any) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsChangeProfile(true));
     try {
       const { response, data } = await updateProfileApi(payload);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Profil berhasil diperbarui');
-      dispatch(asyncGetProfile()); // Refresh profile
+      dispatch(asyncGetProfile() as any);
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsChangeProfile(false));
     }
-  }
-);
+  };
+}
 
-export const asyncUpdateProfilePhoto = createAsyncThunk(
-  'users/updateProfilePhoto',
-  async (file: File, { rejectWithValue, dispatch }) => {
+export function asyncUpdateProfilePhoto(file: File) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsChangeProfilePhoto(true));
     try {
       const { response, data } = await updateProfilePhotoApi(file);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Foto profil berhasil diperbarui');
-      dispatch(asyncGetProfile()); // Refresh profile
+      dispatch(asyncGetProfile() as any);
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsChangeProfilePhoto(false));
     }
-  }
-);
+  };
+}
 
-export const asyncUpdateProfilePassword = createAsyncThunk(
-  'users/updateProfilePassword',
-  async (payload: any, { rejectWithValue }) => {
+export function asyncUpdateProfilePassword(payload: any) {
+  return async (dispatch: AppDispatch) => {
+    dispatch(setIsChangeProfilePassword(true));
     try {
       const { response, data } = await updateProfilePasswordApi(payload);
       if (!response.ok) {
         showErrorDialog('Gagal', data.message);
-        return rejectWithValue(data.message);
+        throw new Error(data.message);
       }
       showSuccessDialog('Berhasil', 'Kata sandi berhasil diperbarui');
       return data;
     } catch (error: any) {
       showErrorDialog('Error', error.message);
-      return rejectWithValue(error.message);
+      throw error;
+    } finally {
+      dispatch(setIsChangeProfilePassword(false));
     }
-  }
-);
+  };
+}

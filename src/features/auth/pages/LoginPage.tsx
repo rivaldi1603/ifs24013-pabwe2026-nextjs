@@ -25,10 +25,10 @@ export default function LoginPage() {
       return;
     }
 
-    const result = await dispatch(asyncAuthLogin({ email, password }));
-    if (asyncAuthLogin.fulfilled.match(result)) {
+    try {
+      await dispatch(asyncAuthLogin({ email, password }));
       router.push('/');
-    }
+    } catch (error) {}
   };
 
   return (

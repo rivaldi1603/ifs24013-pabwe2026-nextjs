@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { asyncAuthLogin, asyncAuthRegister, asyncAuthLogout } from './action';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   isAuthLogin: boolean;
@@ -17,45 +16,22 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setIsAuthLogin(state, action: PayloadAction<boolean>) {
+      state.isAuthLogin = action.payload;
+    },
+    setIsAuthRegister(state, action: PayloadAction<boolean>) {
+      state.isAuthRegister = action.payload;
+    },
+    setIsAuthLogout(state, action: PayloadAction<boolean>) {
+      state.isAuthLogout = action.payload;
+    },
     resetAuthStatus(state) {
       state.isAuthLogin = false;
       state.isAuthRegister = false;
       state.isAuthLogout = false;
     }
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(asyncAuthLogin.pending, (state) => {
-        state.isAuthLogin = true;
-      })
-      .addCase(asyncAuthLogin.fulfilled, (state) => {
-        state.isAuthLogin = false;
-      })
-      .addCase(asyncAuthLogin.rejected, (state) => {
-        state.isAuthLogin = false;
-      })
-      
-      .addCase(asyncAuthRegister.pending, (state) => {
-        state.isAuthRegister = true;
-      })
-      .addCase(asyncAuthRegister.fulfilled, (state) => {
-        state.isAuthRegister = false;
-      })
-      .addCase(asyncAuthRegister.rejected, (state) => {
-        state.isAuthRegister = false;
-      })
-      
-      .addCase(asyncAuthLogout.pending, (state) => {
-        state.isAuthLogout = true;
-      })
-      .addCase(asyncAuthLogout.fulfilled, (state) => {
-        state.isAuthLogout = false;
-      })
-      .addCase(asyncAuthLogout.rejected, (state) => {
-        state.isAuthLogout = false;
-      });
-  },
 });
 
-export const { resetAuthStatus } = authSlice.actions;
+export const { resetAuthStatus, setIsAuthLogin, setIsAuthRegister, setIsAuthLogout } = authSlice.actions;
 export default authSlice.reducer;

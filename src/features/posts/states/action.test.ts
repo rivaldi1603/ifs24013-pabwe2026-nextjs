@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import * as actions from '../states/action';
+import { 
+  asyncGetPosts, asyncGetPostDetail, asyncAddPost, asyncUpdatePost, 
+  asyncUpdatePostCover, asyncDeletePost, asyncToggleLike, asyncAddComment, 
+  asyncDeleteComment, asyncDeleteAllPosts 
+} from '../states/action';
 import * as postApi from '../api/postApi';
 import * as toolsHelper from '../../../helpers/toolsHelper';
+import * as reducer from '../states/reducer';
 
 vi.mock('../api/postApi', () => ({
   getPostsApi: vi.fn(),
@@ -23,91 +28,118 @@ vi.mock('../../../helpers/toolsHelper', () => ({
 
 describe('Posts Actions', () => {
   let dispatch: any;
+
   beforeEach(() => {
-    dispatch = vi.fn();
+    dispatch = vi.fn().mockResolvedValue(true);
     vi.clearAllMocks();
   });
 
-  it('asyncGetPosts handles success', async () => {
-    (postApi.getPostsApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { posts: [] } } });
-    const action = actions.asyncGetPosts();
-    const result = await action(dispatch, () => ({}), undefined);
-    expect(result.payload).toEqual([]);
+  describe('asyncGetPosts', () => {
+    it('should fetch posts successfully', async () => {
+      (postApi.getPostsApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { posts: [{ id: 1 }] } } });
+      const action = asyncGetPosts();
+      const result = await action(dispatch);
+      expect(result).toEqual([{ id: 1 }]);
+      expect(dispatch).toHaveBeenCalledWith(reducer.setPosts([{ id: 1 }] as any));
+    });
+
+    it('should handle fetch failure', async () => {
+      (postApi.getPostsApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncGetPosts();
+      await expect(action(dispatch)).rejects.toThrow('Error');
+    });
   });
 
-  it('asyncGetPostDetail handles success', async () => {
-    (postApi.getPostDetailApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { post: { id: 1 } } } });
-    const action = actions.asyncGetPostDetail(1);
-    const result = await action(dispatch, () => ({}), undefined);
-    expect(result.payload).toEqual({ id: 1 });
+  describe('asyncGetPostDetail', () => {
+    it('should fetch post detail successfully', async () => {
+      (postApi.getPostDetailApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { post: { id: 1 } } } });
+      const action = asyncGetPostDetail(1);
+      const result = await action(dispatch);
+      expect(result).toEqual({ id: 1 });
+      expect(dispatch).toHaveBeenCalledWith(reducer.setPost({ id: 1 } as any));
+    });
+
+    it('should handle detail fetch failure', async () => {
+      (postApi.getPostDetailApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncGetPostDetail(1);
+      await expect(action(dispatch)).rejects.toThrow('Error');
+    });
   });
 
-  it('asyncAddPost handles success', async () => {
-    (postApi.addPostApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncAddPost({ description: 'd' });
-    await action(dispatch, () => ({}), undefined);
-    expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+  describe('asyncAddPost', () => {
+    it('should add post successfully', async () => {
+      (postApi.addPostApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncAddPost({ description: 'Test' });
+      const result = await action(dispatch);
+      expect(result).toEqual({ success: true });
+      expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
+
+    it('should handle add post failure', async () => {
+      (postApi.addPostApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncAddPost({ description: 'Test' });
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
+    });
   });
 
-  it('asyncAddPost handles error', async () => {
-    (postApi.addPostApi as any).mockResolvedValue({ response: { ok: false }, data: {} });
-    const action = actions.asyncAddPost({ description: 'd' });
-    await action(dispatch, () => ({}), undefined);
-    expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
+  describe('asyncUpdatePost', () => {
+    it('should update post successfully', async () => {
+      (postApi.updatePostApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncUpdatePost({ id: 1, description: 'Test' });
+      await action(dispatch);
+      expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
   });
 
-  it('asyncUpdatePost handles success', async () => {
-    (postApi.updatePostApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncUpdatePost({ id: 1, description: 'd' });
-    await action(dispatch, () => ({}), undefined);
-    expect(dispatch).toHaveBeenCalled();
+  describe('asyncUpdatePostCover', () => {
+    it('should update cover successfully', async () => {
+      (postApi.updatePostCoverApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncUpdatePostCover({ id: 1, file: new File([''], '') });
+      await action(dispatch);
+      expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
   });
 
-  it('asyncUpdatePostCover handles success', async () => {
-    (postApi.updatePostCoverApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncUpdatePostCover({ id: 1, file: new File([''], '') });
-    await action(dispatch, () => ({}), undefined);
-    expect(dispatch).toHaveBeenCalled();
+  describe('asyncDeletePost', () => {
+    it('should delete post successfully', async () => {
+      (postApi.deletePostApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncDeletePost(1);
+      await action(dispatch);
+      expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
   });
 
-  it('asyncDeletePost handles success', async () => {
-    (postApi.deletePostApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncDeletePost(1);
-    await action(dispatch, () => ({}), undefined);
-    expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+  describe('asyncToggleLike', () => {
+    it('should toggle like successfully', async () => {
+      (postApi.toggleLikeApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncToggleLike(1);
+      await action(dispatch);
+    });
   });
 
-  it('asyncToggleLike handles success', async () => {
-    (postApi.toggleLikeApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncToggleLike(1);
-    await action(dispatch, () => ({}), undefined);
+  describe('asyncAddComment', () => {
+    it('should add comment successfully', async () => {
+      (postApi.addCommentApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncAddComment({ id: 1, comment: 'Test' });
+      await action(dispatch);
+    });
   });
 
-  it('asyncAddComment handles success', async () => {
-    (postApi.addCommentApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncAddComment({ id: 1, comment: 'c' });
-    await action(dispatch, () => ({}), undefined);
-    expect(dispatch).toHaveBeenCalled();
+  describe('asyncDeleteComment', () => {
+    it('should delete comment successfully', async () => {
+      (postApi.deleteCommentApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncDeleteComment({ postId: 1, commentId: 1 });
+      await action(dispatch);
+    });
   });
 
-  it('asyncDeleteComment handles success', async () => {
-    (postApi.deleteCommentApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncDeleteComment({ postId: 1, commentId: 2 });
-    await action(dispatch, () => ({}), undefined);
-    expect(dispatch).toHaveBeenCalled();
-  });
-
-  it('asyncDeleteAllPosts handles success', async () => {
-    (postApi.deleteAllPostsApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
-    const action = actions.asyncDeleteAllPosts();
-    await action(dispatch, () => ({}), undefined);
-    expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
-  });
-
-  it('asyncDeleteAllPosts handles error', async () => {
-    (postApi.deleteAllPostsApi as any).mockRejectedValue(new Error('error'));
-    const action = actions.asyncDeleteAllPosts();
-    await action(dispatch, () => ({}), undefined);
-    expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
+  describe('asyncDeleteAllPosts', () => {
+    it('should delete all posts successfully', async () => {
+      (postApi.deleteAllPostsApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      const action = asyncDeleteAllPosts();
+      await action(dispatch);
+      expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
   });
 });

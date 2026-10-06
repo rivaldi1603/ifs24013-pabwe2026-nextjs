@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import postsReducer, { resetPostStatus } from '../states/reducer';
-import * as actions from '../states/action';
+import postsReducer, { 
+  resetPostStatus, setPosts, setPost, setIsPost, setIsPostAdd, 
+  setIsPostChange, setIsPostChangeCover, setIsPostDelete, 
+  setIsPostLike, setIsPostAddComment, setIsPostDeleteComment, setIsPostDeleteAll 
+} from '../states/reducer';
 import { Post } from '../../../types';
 
 describe('Posts Reducer', () => {
@@ -26,47 +29,44 @@ describe('Posts Reducer', () => {
     isPostDeletedAll: false,
   };
 
-  it('resetPostStatus', () => {
-    expect(postsReducer({ ...initialState, isPostAdded: true }, resetPostStatus())).toEqual(initialState);
+  it('should return initial state', () => {
+    expect(postsReducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 
-  it('asyncGetPosts', () => {
-    const nextState = postsReducer(initialState, actions.asyncGetPosts.fulfilled([] as any, '', {}));
-    expect(nextState.posts).toEqual([]);
-  });
-
-  it('asyncGetPostDetail', () => {
-    const nextState = postsReducer(initialState, actions.asyncGetPostDetail.fulfilled({ id: 1 } as any, '', 1));
-    expect(nextState.post).toEqual({ id: 1 });
-  });
-
-  it('asyncAddPost', () => {
-    const nextState = postsReducer(initialState, actions.asyncAddPost.fulfilled({} as any, '', { description: '' }));
-    expect(nextState.isPostAdded).toBe(true);
-  });
-
-  it('asyncDeletePost', () => {
-    const state = { ...initialState, posts: [{ id: 1 } as any] };
-    const nextState = postsReducer(state, actions.asyncDeletePost.fulfilled(1, '', 1));
-    expect(nextState.posts).toHaveLength(0);
-  });
-
-  it('asyncToggleLike', () => {
-    const state = { 
-      ...initialState, 
-      posts: [{ id: 1, is_liked: false, likes_count: 0 } as any],
-      post: { id: 1, is_liked: false, likes_count: 0 } as any
+  it('should handle resetPostStatus', () => {
+    const state = {
+      ...initialState,
+      isPostAdded: true,
+      isPostChanged: true,
+      isPostChangedCover: true,
+      isPostDeleted: true,
+      isPostLiked: true,
+      isPostAddedComment: true,
+      isPostDeletedComment: true,
+      isPostDeletedAll: true,
     };
-    const nextState = postsReducer(state, actions.asyncToggleLike.fulfilled(1, '', 1));
-    expect(nextState.posts[0].is_liked).toBe(true);
-    expect(nextState.posts[0].likes_count).toBe(1);
-    expect(nextState.post?.is_liked).toBe(true);
+    expect(postsReducer(state, resetPostStatus())).toEqual(initialState);
   });
 
-  it('asyncDeleteAllPosts', () => {
-    const state = { ...initialState, posts: [{ id: 1, is_me: true } as any, { id: 2, is_me: false } as any] };
-    const nextState = postsReducer(state, actions.asyncDeleteAllPosts.fulfilled(true, '', undefined));
-    expect(nextState.posts).toHaveLength(1);
-    expect(nextState.posts[0].id).toBe(2);
+  it('should handle setPosts', () => {
+    const posts = [{ id: 1 }] as Post[];
+    expect(postsReducer(initialState, setPosts(posts))).toEqual({ ...initialState, posts });
+  });
+
+  it('should handle setPost', () => {
+    const post = { id: 1 } as Post;
+    expect(postsReducer(initialState, setPost(post))).toEqual({ ...initialState, post });
+  });
+
+  it('should handle boolean setters', () => {
+    expect(postsReducer(initialState, setIsPost(true))).toEqual({ ...initialState, isPost: true });
+    expect(postsReducer(initialState, setIsPostAdd(true))).toEqual({ ...initialState, isPostAdd: true });
+    expect(postsReducer(initialState, setIsPostChange(true))).toEqual({ ...initialState, isPostChange: true });
+    expect(postsReducer(initialState, setIsPostChangeCover(true))).toEqual({ ...initialState, isPostChangeCover: true });
+    expect(postsReducer(initialState, setIsPostDelete(true))).toEqual({ ...initialState, isPostDelete: true });
+    expect(postsReducer(initialState, setIsPostLike(true))).toEqual({ ...initialState, isPostLike: true });
+    expect(postsReducer(initialState, setIsPostAddComment(true))).toEqual({ ...initialState, isPostAddComment: true });
+    expect(postsReducer(initialState, setIsPostDeleteComment(true))).toEqual({ ...initialState, isPostDeleteComment: true });
+    expect(postsReducer(initialState, setIsPostDeleteAll(true))).toEqual({ ...initialState, isPostDeleteAll: true });
   });
 });

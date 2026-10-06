@@ -16,6 +16,8 @@ import * as postApi from '../api/postApi';
 
 vi.mock('../../../helpers/toolsHelper', () => ({
   showConfirmDialog: vi.fn(),
+  showErrorDialog: vi.fn(),
+  showSuccessDialog: vi.fn(),
   formatDate: vi.fn().mockReturnValue('1 Jan'),
 }));
 
@@ -61,3 +63,4 @@ describe('HomePage', () => {
     });
   });
 });
+

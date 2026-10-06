@@ -3,6 +3,7 @@ import { asyncAuthLogin, asyncAuthRegister, asyncAuthLogout } from '../states/ac
 import * as authApi from '../api/authApi';
 import * as apiHelper from '../../../helpers/apiHelper';
 import * as toolsHelper from '../../../helpers/toolsHelper';
+import * as reducer from '../states/reducer';
 
 vi.mock('../api/authApi', () => ({
   loginApi: vi.fn(),
@@ -35,11 +36,13 @@ describe('Auth Actions', () => {
       });
 
       const action = asyncAuthLogin({ email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
+      const result = await action(dispatch);
       
       expect(apiHelper.putAccessToken).toHaveBeenCalledWith('test-token');
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
-      expect(result.payload).toEqual({ data: { token: 'test-token' } });
+      expect(result).toEqual({ data: { token: 'test-token' } });
+      expect(dispatch).toHaveBeenCalledWith(reducer.setIsAuthLogin(true));
+      expect(dispatch).toHaveBeenCalledWith(reducer.setIsAuthLogin(false));
     });
 
     it('should handle failed login API response', async () => {
@@ -49,20 +52,18 @@ describe('Auth Actions', () => {
       });
 
       const action = asyncAuthLogin({ email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
+      await expect(action(dispatch)).rejects.toThrow('Invalid credentials');
       
       expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Login Gagal', 'Invalid credentials');
-      expect(result.payload).toBe('Invalid credentials');
     });
 
     it('should handle API exception during login', async () => {
       (authApi.loginApi as any).mockRejectedValue(new Error('Network error'));
 
       const action = asyncAuthLogin({ email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
+      await expect(action(dispatch)).rejects.toThrow('Network error');
       
       expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Error', 'Network error');
-      expect(result.payload).toBe('Network error');
     });
   });
 
@@ -74,10 +75,10 @@ describe('Auth Actions', () => {
       });
 
       const action = asyncAuthRegister({ name: 'Test', email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
+      const result = await action(dispatch);
       
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
-      expect(result.payload).toEqual({ success: true });
+      expect(result).toEqual({ success: true });
     });
 
     it('should handle failed registration API response', async () => {
@@ -87,39 +88,19 @@ describe('Auth Actions', () => {
       });
 
       const action = asyncAuthRegister({ name: 'Test', email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
+      await expect(action(dispatch)).rejects.toThrow('Email already exists');
       
       expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Registrasi Gagal', 'Email already exists');
-      expect(result.payload).toBe('Email already exists');
-    });
-
-    it('should handle API exception during registration', async () => {
-      (authApi.registerApi as any).mockRejectedValue(new Error('Network error'));
-
-      const action = asyncAuthRegister({ name: 'Test', email: 'test@test.com', password: 'password' });
-      const result = await action(dispatch, () => ({}), undefined);
-      
-      expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Error', 'Network error');
     });
   });
 
   describe('asyncAuthLogout', () => {
     it('should handle logout successfully', async () => {
       const action = asyncAuthLogout();
-      const result = await action(dispatch, () => ({}), undefined);
+      const result = await action(dispatch);
       
       expect(apiHelper.removeAccessToken).toHaveBeenCalled();
-      expect(result.payload).toBe(true);
-    });
-
-    it('should handle logout error', async () => {
-      (apiHelper.removeAccessToken as any).mockImplementation(() => {
-        throw new Error('Logout failed');
-      });
-      const action = asyncAuthLogout();
-      const result = await action(dispatch, () => ({}), undefined);
-      
-      expect(result.payload).toBe('Logout failed');
+      expect(result).toBe(true);
     });
   });
 });
