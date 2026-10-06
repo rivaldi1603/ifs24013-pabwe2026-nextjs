@@ -38,12 +38,13 @@ export default function PostLayout({ children }: { children: React.ReactNode }) 
 
   if (isChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950">
+      <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-neutral-950">
+        <h1 className="sr-only">Memuat Halaman</h1>
         <div className="flex flex-col items-center">
           <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
           <p className="text-neutral-500 dark:text-neutral-400 font-medium">Memuat Sesi...</p>
         </div>
-      </div>
+      </main>
     );
   }
 

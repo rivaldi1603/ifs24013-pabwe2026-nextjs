@@ -19,9 +19,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
   if (isChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <h1 className="sr-only">Memuat Halaman</h1>
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
+      </main>
     );
   }
 
