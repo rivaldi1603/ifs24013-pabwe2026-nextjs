@@ -31,7 +31,7 @@ export default function SidebarComponent({ isOpen, setIsOpen }: SidebarProps) {
       )}
 
       {/* Sidebar container */}
-      <div 
+      <aside 
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-auto lg:h-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between h-16 px-6 lg:hidden border-b border-neutral-100 dark:border-neutral-800">
@@ -70,7 +70,7 @@ export default function SidebarComponent({ isOpen, setIsOpen }: SidebarProps) {
             );
           })}
         </div>
-      </div>
+      </aside>
     </>
   );
 }

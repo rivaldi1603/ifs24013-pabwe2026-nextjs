@@ -51,7 +51,7 @@ export default function UsersPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-500 mb-4">
             <IconUser size={32} />
           </div>
-          <h3 className="text-lg font-bold text-neutral-900 dark:text-white">Tidak ada pengguna</h3>
+          <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Tidak ada pengguna</h2>
           <p className="text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto mt-2">
             Pengguna yang Anda cari tidak ditemukan. Coba dengan kata kunci lain.
           </p>
@@ -73,9 +73,9 @@ export default function UsersPage() {
                 )}
               </div>
               
-              <h3 className="text-lg font-bold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
+              <h2 className="text-lg font-bold text-neutral-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
                 {user.name}
-              </h3>
+              </h2>
               
               <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mt-2">
                 <IconCalendar size={14} className="mr-1.5" />
