@@ -10,8 +10,8 @@ vi.mock('sweetalert2', () => ({
 
 describe('toolsHelper', () => {
   describe('SweetAlert functions', () => {
-    it('should call showSuccessDialog with correct options', () => {
-      showSuccessDialog('Success', 'Operation successful');
+    it('should call showSuccessDialog with correct options', async () => {
+      await showSuccessDialog('Success', 'Operation successful');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
           icon: 'success',
@@ -21,8 +21,8 @@ describe('toolsHelper', () => {
       );
     });
 
-    it('should call showErrorDialog with correct options', () => {
-      showErrorDialog('Error', 'Operation failed');
+    it('should call showErrorDialog with correct options', async () => {
+      await showErrorDialog('Error', 'Operation failed');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
           icon: 'error',
@@ -32,8 +32,8 @@ describe('toolsHelper', () => {
       );
     });
 
-    it('should call showWarningDialog with correct options', () => {
-      showWarningDialog('Warning', 'Be careful');
+    it('should call showWarningDialog with correct options', async () => {
+      await showWarningDialog('Warning', 'Be careful');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
           icon: 'warning',
@@ -43,8 +43,8 @@ describe('toolsHelper', () => {
       );
     });
 
-    it('should call showConfirmDialog with correct options', () => {
-      showConfirmDialog('Are you sure?', 'This cannot be undone');
+    it('should call showConfirmDialog with correct options', async () => {
+      await showConfirmDialog('Are you sure?', 'This cannot be undone');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
           icon: 'question',
