@@ -5,7 +5,7 @@ type Params = Promise<{ postId: string }>;
 
 export default async function Page(props: { params: Params }) {
   const params = await props.params;
-  const postId = parseInt(params.postId, 10);
+  const postId = Number.parseInt(params.postId, 10);
   
   return <DetailPage postId={postId} />;
 }
