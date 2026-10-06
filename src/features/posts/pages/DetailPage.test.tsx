@@ -33,14 +33,16 @@ describe('DetailPage', () => {
     });
   });
 
-  it('renders post details', () => {
+  it('renders post details', async () => {
     const post = { 
       id: 1, description: 'Detail Desc', author: { name: 'Author' }, 
       is_me: true, likes_count: 5, comments_count: 0, comments: []
     };
     renderWithProviders(<DetailPage postId={1} />, { preloadedState: { posts: { post } as any } });
-    expect(screen.getByText('Detail Desc')).toBeInTheDocument();
-    expect(screen.getByText('Author')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Detail Desc')).toBeInTheDocument();
+      expect(screen.getByText('Author')).toBeInTheDocument();
+    });
   });
 
   it('handles add comment', async () => {

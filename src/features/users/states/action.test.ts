@@ -29,7 +29,7 @@ describe('Users Actions', () => {
 
   describe('asyncGetUsers', () => {
     it('should fetch users successfully', async () => {
-      (userApi.getUsersApi as any).mockResolvedValue({ response: { ok: true }, data: { data: [{ id: 1 }] } });
+      (userApi.getUsersApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { users: [{ id: 1 }] } } });
       const action = asyncGetUsers();
       const result = await action(dispatch, () => ({}), undefined);
       expect(result.payload).toEqual([{ id: 1 }]);
@@ -54,7 +54,7 @@ describe('Users Actions', () => {
 
   describe('asyncGetProfile', () => {
     it('should fetch profile successfully', async () => {
-      (userApi.getProfileApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { id: 1 } } });
+      (userApi.getProfileApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { user: { id: 1 } } } });
       const action = asyncGetProfile();
       const result = await action(dispatch, () => ({}), undefined);
       expect(result.payload).toEqual({ id: 1 });

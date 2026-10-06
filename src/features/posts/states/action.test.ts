@@ -29,14 +29,14 @@ describe('Posts Actions', () => {
   });
 
   it('asyncGetPosts handles success', async () => {
-    (postApi.getPostsApi as any).mockResolvedValue({ response: { ok: true }, data: { data: [] } });
+    (postApi.getPostsApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { posts: [] } } });
     const action = actions.asyncGetPosts();
     const result = await action(dispatch, () => ({}), undefined);
     expect(result.payload).toEqual([]);
   });
 
   it('asyncGetPostDetail handles success', async () => {
-    (postApi.getPostDetailApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { id: 1 } } });
+    (postApi.getPostDetailApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { post: { id: 1 } } } });
     const action = actions.asyncGetPostDetail(1);
     const result = await action(dispatch, () => ({}), undefined);
     expect(result.payload).toEqual({ id: 1 });
