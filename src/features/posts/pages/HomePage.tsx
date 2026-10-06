@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { asyncGetPosts, asyncToggleLike, asyncDeleteAllPosts } from '../states/action';
 import { IconSearch, IconHeartFilled, IconHeart, IconMessageCircle, IconPlus, IconTrash } from '@tabler/icons-react';
 import { formatDate, showConfirmDialog } from '../../../helpers/toolsHelper';
-import AddModal from '../modals/AddModal';
-
+import dynamic from 'next/dynamic';
+const AddModal = dynamic(() => import('../modals/AddModal'), { ssr: false });
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();

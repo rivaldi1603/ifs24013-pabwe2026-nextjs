@@ -1,6 +1,5 @@
-import Swal from 'sweetalert2';
-
-export const showSuccessDialog = (title: string, text?: string) => {
+export const showSuccessDialog = async (title: string, text?: string) => {
+  const Swal = (await import('sweetalert2')).default;
   return Swal.fire({
     icon: 'success',
     title,
@@ -9,7 +8,8 @@ export const showSuccessDialog = (title: string, text?: string) => {
   });
 };
 
-export const showErrorDialog = (title: string, text?: string) => {
+export const showErrorDialog = async (title: string, text?: string) => {
+  const Swal = (await import('sweetalert2')).default;
   return Swal.fire({
     icon: 'error',
     title,
@@ -18,7 +18,8 @@ export const showErrorDialog = (title: string, text?: string) => {
   });
 };
 
-export const showWarningDialog = (title: string, text?: string) => {
+export const showWarningDialog = async (title: string, text?: string) => {
+  const Swal = (await import('sweetalert2')).default;
   return Swal.fire({
     icon: 'warning',
     title,
@@ -27,7 +28,8 @@ export const showWarningDialog = (title: string, text?: string) => {
   });
 };
 
-export const showConfirmDialog = (title: string, text: string) => {
+export const showConfirmDialog = async (title: string, text: string) => {
+  const Swal = (await import('sweetalert2')).default;
   return Swal.fire({
     title,
     text,

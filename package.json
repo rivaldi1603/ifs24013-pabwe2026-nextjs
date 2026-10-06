@@ -42,7 +42,7 @@
     "unrs-resolver"
   ],
   "trustedDependencies": [
-    "sharp",
+    "sharp"
   ],
   "browserslist": {
     "production": [

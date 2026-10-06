@@ -13,8 +13,9 @@ import {
   IconTrash, IconEdit, IconPhotoEdit, IconSend 
 } from '@tabler/icons-react';
 import { formatDate, showConfirmDialog } from '../../../helpers/toolsHelper';
-import ChangeModal from '../modals/ChangeModal';
-import ChangeCoverModal from '../modals/ChangeCoverModal';
+import dynamic from 'next/dynamic';
+const ChangeModal = dynamic(() => import('../modals/ChangeModal'), { ssr: false });
+const ChangeCoverModal = dynamic(() => import('../modals/ChangeCoverModal'), { ssr: false });
 
 export default function DetailPage({ postId }: { postId: number }) {
   const router = useRouter();
