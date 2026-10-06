@@ -100,7 +100,7 @@ export default function HomePage() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-500 mb-6">
             <IconMessageCircle size={40} />
           </div>
-          <h3 className="text-xl font-bold text-neutral-900 dark:text-white">Tidak ada postingan</h3>
+          <h2 className="text-xl font-bold text-neutral-900 dark:text-white">Tidak ada postingan</h2>
           <p className="text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto mt-2">
             Belum ada postingan yang dapat ditampilkan. Buat postingan pertama Anda sekarang!
           </p>
@@ -127,7 +127,7 @@ export default function HomePage() {
                     <IconMessageCircle size={48} className="mb-2 opacity-50" />
                   </div>
                 )}
-                <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white border border-white/10">
+                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white border border-white/10">
                   {formatDate(post.created_at)}
                 </div>
               </div>
@@ -152,6 +152,7 @@ export default function HomePage() {
                 
                 <div className="flex items-center gap-4 pt-4 border-t border-neutral-100 dark:border-neutral-800">
                   <button 
+                    aria-label="Suka postingan"
                     onClick={(e) => handleLike(e, post.id)}
                     className="flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-red-500 group/btn"
                   >

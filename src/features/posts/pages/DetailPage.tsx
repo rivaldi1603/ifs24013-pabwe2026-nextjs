@@ -164,6 +164,7 @@ export default function DetailPage({ postId }: { postId: number }) {
 
           <div className="flex items-center gap-6 pt-6 border-t border-neutral-100 dark:border-neutral-800">
             <button 
+              aria-label="Suka postingan"
               onClick={handleLike}
               className="flex items-center gap-2 font-medium transition-colors hover:text-red-500 group"
             >
@@ -202,6 +203,7 @@ export default function DetailPage({ postId }: { postId: number }) {
             className="flex-1 px-5 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white outline-none transition-all"
           />
           <button
+            aria-label="Kirim komentar"
             type="submit"
             disabled={isPostAddComment || !commentText.trim()}
             className="flex items-center justify-center p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl transition-colors disabled:opacity-70 disabled:cursor-not-allowed"

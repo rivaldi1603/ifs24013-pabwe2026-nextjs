@@ -39,6 +39,7 @@ export default function SidebarComponent({ isOpen, setIsOpen }: SidebarProps) {
             DelcomPosts
           </span>
           <button 
+            aria-label="Tutup sidebar"
             onClick={() => setIsOpen(false)} 
             className="text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 focus:outline-none"
           >

@@ -34,9 +34,9 @@ export default function LoginPage() {
   return (
     <div className="w-full animation-fade-in">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight mb-2">
           Selamat Datang Kembali
-        </h2>
+        </h1>
         <p className="text-neutral-500 dark:text-neutral-400 font-medium">
           Masuk ke akun Anda untuk melanjutkan
         </p>
@@ -98,7 +98,7 @@ export default function LoginPage() {
 
       <div className="mt-8 text-center text-sm font-medium text-neutral-600 dark:text-neutral-400">
         Belum memiliki akun?{' '}
-        <Link href="/auth/register" className="text-blue-600 hover:text-blue-500 hover:underline transition-all">
+        <Link href="/auth/register" className="text-blue-600 hover:text-blue-500 underline transition-all">
           Daftar sekarang
         </Link>
       </div>

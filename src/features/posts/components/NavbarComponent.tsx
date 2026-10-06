@@ -26,6 +26,7 @@ export default function NavbarComponent({ toggleSidebar }: { toggleSidebar: () =
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <button 
+              aria-label="Toggle navigasi sidebar"
               onClick={toggleSidebar}
               className="p-2 -ml-2 mr-2 rounded-xl text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors lg:hidden focus:outline-none"
             >

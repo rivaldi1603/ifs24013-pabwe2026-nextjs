@@ -143,8 +143,9 @@ export default function ProfilePage() {
             
             <form onSubmit={handleUpdateProfile} className="p-6 space-y-5">
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Nama Lengkap</label>
+                <label htmlFor="profile-name" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Nama Lengkap</label>
                 <input
+                  id="profile-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -154,8 +155,9 @@ export default function ProfilePage() {
               </div>
               
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Bio</label>
+                <label htmlFor="profile-bio" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Bio</label>
                 <textarea
+                  id="profile-bio"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   rows={3}
@@ -190,8 +192,9 @@ export default function ProfilePage() {
             
             <form onSubmit={handleUpdatePassword} className="p-6 space-y-5">
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi Lama</label>
+                <label htmlFor="old-password" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi Lama</label>
                 <input
+                  id="old-password"
                   type="password"
                   value={oldPassword}
                   onChange={onOldPasswordChange}
@@ -201,8 +204,9 @@ export default function ProfilePage() {
               </div>
               
               <div className="space-y-1">
-                <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi Baru</label>
+                <label htmlFor="new-password" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi Baru</label>
                 <input
+                  id="new-password"
                   type="password"
                   value={newPassword}
                   onChange={onNewPasswordChange}

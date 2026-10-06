@@ -39,9 +39,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {/* Banner Content */}
         <div className="relative z-10 w-full p-16 flex flex-col justify-center h-full text-white">
           <div className="mb-8">
-            <h1 className="text-5xl font-black tracking-tight mb-6 leading-tight">
+            <h2 className="text-5xl font-black tracking-tight mb-6 leading-tight">
               Platform Berbagi <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Cerita & Ide</span>
-            </h1>
+            </h2>
             <p className="text-lg text-neutral-300 max-w-md leading-relaxed font-light">
               Bergabunglah dengan komunitas kami. Bagikan pengalaman, baca pemikiran menarik, dan terhubung dengan kreator lainnya di seluruh dunia.
             </p>
@@ -65,11 +65,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Right side: Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-white dark:bg-neutral-950 shadow-2xl z-10 relative">
+      <main className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-white dark:bg-neutral-950 shadow-2xl z-10 relative">
         <div className="w-full max-w-md">
           {children}
         </div>
-      </div>
+      </main>
     </div>
   );
 }

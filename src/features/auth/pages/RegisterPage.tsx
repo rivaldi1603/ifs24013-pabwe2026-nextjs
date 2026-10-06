@@ -40,9 +40,9 @@ export default function RegisterPage() {
   return (
     <div className="w-full animation-fade-in">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight mb-2">
+        <h1 className="text-3xl font-extrabold text-neutral-900 dark:text-white tracking-tight mb-2">
           Buat Akun Baru
-        </h2>
+        </h1>
         <p className="text-neutral-500 dark:text-neutral-400 font-medium">
           Bergabung dan mulai bagikan cerita Anda
         </p>
@@ -140,7 +140,7 @@ export default function RegisterPage() {
 
       <div className="mt-8 text-center text-sm font-medium text-neutral-600 dark:text-neutral-400">
         Sudah memiliki akun?{' '}
-        <Link href="/auth/login" className="text-purple-600 hover:text-purple-500 hover:underline transition-all">
+        <Link href="/auth/login" className="text-purple-600 hover:text-purple-500 underline transition-all">
           Masuk di sini
         </Link>
       </div>
