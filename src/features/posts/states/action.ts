@@ -19,7 +19,7 @@ export const asyncGetPosts = createAsyncThunk(
     try {
       const { response, data } = await getPostsApi(isMe, search);
       if (!response.ok) return rejectWithValue(data.message);
-      return data.data; // Array of posts
+      return data.data.posts; // Array of posts
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -32,7 +32,7 @@ export const asyncGetPostDetail = createAsyncThunk(
     try {
       const { response, data } = await getPostDetailApi(id);
       if (!response.ok) return rejectWithValue(data.message);
-      return data.data; // Post object
+      return data.data.post; // Post object
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

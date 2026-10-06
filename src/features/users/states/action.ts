@@ -18,7 +18,7 @@ export const asyncGetUsers = createAsyncThunk(
         showErrorDialog('Gagal mengambil data', data.message);
         return rejectWithValue(data.message);
       }
-      return data.data; // Array of Users
+      return data.data.users; // Array of Users
     } catch (error: any) {
       showErrorDialog('Error', error.message);
       return rejectWithValue(error.message);
@@ -34,7 +34,7 @@ export const asyncGetProfile = createAsyncThunk(
       if (!response.ok) {
         return rejectWithValue(data.message);
       }
-      return data.data; // Profile object
+      return data.data.user; // Profile object
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
