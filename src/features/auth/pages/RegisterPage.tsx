@@ -56,6 +56,7 @@ export default function RegisterPage() {
               <IconUser size={20} />
             </div>
             <input
+              id="register-name-input"
               type="text"
               value={name}
               onChange={onNameChange}
@@ -73,6 +74,7 @@ export default function RegisterPage() {
               <IconMail size={20} />
             </div>
             <input
+              id="register-email-input"
               type="email"
               value={email}
               onChange={onEmailChange}
@@ -90,6 +92,7 @@ export default function RegisterPage() {
               <IconLock size={20} />
             </div>
             <input
+              id="register-password-input"
               type="password"
               value={password}
               onChange={onPasswordChange}
@@ -107,6 +110,7 @@ export default function RegisterPage() {
               <IconLock size={20} />
             </div>
             <input
+              id="register-confirm-password-input"
               type="password"
               value={passwordConfirm}
               onChange={onPasswordConfirmChange}
@@ -118,6 +122,7 @@ export default function RegisterPage() {
         </div>
 
         <button
+          id="register-submit-button"
           type="submit"
           disabled={isAuthRegister}
           className="w-full mt-2 flex items-center justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 transform hover:-translate-y-0.5"

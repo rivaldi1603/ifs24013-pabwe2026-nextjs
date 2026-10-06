@@ -50,6 +50,7 @@ export default function LoginPage() {
               <IconMail size={20} />
             </div>
             <input
+              id="login-email-input"
               type="email"
               value={email}
               onChange={onEmailChange}
@@ -67,6 +68,7 @@ export default function LoginPage() {
               <IconLock size={20} />
             </div>
             <input
+              id="login-password-input"
               type="password"
               value={password}
               onChange={onPasswordChange}
@@ -78,6 +80,7 @@ export default function LoginPage() {
         </div>
 
         <button
+          id="login-submit-button"
           type="submit"
           disabled={isAuthLogin}
           className="w-full flex items-center justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 transform hover:-translate-y-0.5"
