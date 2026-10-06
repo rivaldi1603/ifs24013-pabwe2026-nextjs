@@ -50,7 +50,7 @@ export default function RegisterPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-1">
-          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Nama Lengkap</label>
+          <label htmlFor="register-name-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Nama Lengkap</label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-purple-500 transition-colors">
               <IconUser size={20} />
@@ -68,7 +68,7 @@ export default function RegisterPage() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Email</label>
+          <label htmlFor="register-email-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Email</label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-purple-500 transition-colors">
               <IconMail size={20} />
@@ -86,7 +86,7 @@ export default function RegisterPage() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi</label>
+          <label htmlFor="register-password-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi</label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-purple-500 transition-colors">
               <IconLock size={20} />
@@ -104,7 +104,7 @@ export default function RegisterPage() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Konfirmasi Kata Sandi</label>
+          <label htmlFor="register-confirm-password-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Konfirmasi Kata Sandi</label>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-purple-500 transition-colors">
               <IconLock size={20} />
