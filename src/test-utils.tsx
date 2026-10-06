@@ -4,9 +4,7 @@ import type { RenderOptions } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import type { RootState } from './store';
-import authReducer from './features/auth/states/reducer';
-import usersReducer from './features/users/states/reducer';
-import postsReducer from './features/posts/states/reducer';
+import { rootReducer } from './store';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
@@ -15,11 +13,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 
 export function setupStore(preloadedState?: Partial<RootState>) {
   return configureStore({
-    reducer: {
-      auth: authReducer,
-      users: usersReducer,
-      posts: postsReducer,
-    },
+    reducer: rootReducer,
     preloadedState,
   });
 }
@@ -32,7 +26,7 @@ export function renderWithProviders(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
+  function Wrapper({ children }: PropsWithChildren<{}>) {
     return <Provider store={store}>{children}</Provider>;
   }
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
