@@ -86,18 +86,40 @@ describe('Posts Actions', () => {
   describe('asyncUpdatePost', () => {
     it('should update post successfully', async () => {
       (postApi.updatePostApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      dispatch.mockImplementation((action: any) => {
+        if (typeof action === 'function') return Promise.reject(new Error('fail'));
+        return true;
+      });
       const action = asyncUpdatePost({ id: 1, description: 'Test' });
       await action(dispatch);
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
+
+    it('should handle update post failure', async () => {
+      (postApi.updatePostApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncUpdatePost({ id: 1, description: 'Test' });
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
     });
   });
 
   describe('asyncUpdatePostCover', () => {
     it('should update cover successfully', async () => {
       (postApi.updatePostCoverApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      dispatch.mockImplementation((action: any) => {
+        if (typeof action === 'function') return Promise.reject(new Error('fail'));
+        return true;
+      });
       const action = asyncUpdatePostCover({ id: 1, file: new File([''], '') });
       await action(dispatch);
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
+
+    it('should handle update cover failure', async () => {
+      (postApi.updatePostCoverApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncUpdatePostCover({ id: 1, file: new File([''], '') });
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
     });
   });
 
@@ -108,6 +130,13 @@ describe('Posts Actions', () => {
       await action(dispatch);
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
     });
+
+    it('should handle delete post failure', async () => {
+      (postApi.deletePostApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncDeletePost(1);
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
+    });
   });
 
   describe('asyncToggleLike', () => {
@@ -116,21 +145,49 @@ describe('Posts Actions', () => {
       const action = asyncToggleLike(1);
       await action(dispatch);
     });
+
+    it('should handle toggle like failure', async () => {
+      (postApi.toggleLikeApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncToggleLike(1);
+      await expect(action(dispatch)).rejects.toThrow('Error');
+    });
   });
 
   describe('asyncAddComment', () => {
     it('should add comment successfully', async () => {
       (postApi.addCommentApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      dispatch.mockImplementation((action: any) => {
+        if (typeof action === 'function') return Promise.reject(new Error('fail'));
+        return true;
+      });
       const action = asyncAddComment({ id: 1, comment: 'Test' });
       await action(dispatch);
+    });
+
+    it('should handle add comment failure', async () => {
+      (postApi.addCommentApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncAddComment({ id: 1, comment: 'Test' });
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
     });
   });
 
   describe('asyncDeleteComment', () => {
     it('should delete comment successfully', async () => {
       (postApi.deleteCommentApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
+      dispatch.mockImplementation((action: any) => {
+        if (typeof action === 'function') return Promise.reject(new Error('fail'));
+        return true;
+      });
       const action = asyncDeleteComment({ postId: 1, commentId: 1 });
       await action(dispatch);
+    });
+
+    it('should handle delete comment failure', async () => {
+      (postApi.deleteCommentApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncDeleteComment({ postId: 1, commentId: 1 });
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
     });
   });
 
@@ -140,6 +197,13 @@ describe('Posts Actions', () => {
       const action = asyncDeleteAllPosts();
       await action(dispatch);
       expect(toolsHelper.showSuccessDialog).toHaveBeenCalled();
+    });
+
+    it('should handle delete all posts failure', async () => {
+      (postApi.deleteAllPostsApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
+      const action = asyncDeleteAllPosts();
+      await expect(action(dispatch)).rejects.toThrow('Error');
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalled();
     });
   });
 });

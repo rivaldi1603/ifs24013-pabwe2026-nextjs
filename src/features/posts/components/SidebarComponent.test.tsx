@@ -27,5 +27,25 @@ describe('SidebarComponent', () => {
     
     expect(setIsOpen).toHaveBeenCalledWith(false);
   });
+
+  it('calls setIsOpen when close button is clicked', () => {
+    const setIsOpen = vi.fn();
+    renderWithProviders(<SidebarComponent isOpen={true} setIsOpen={setIsOpen} />);
+    
+    const closeBtn = screen.getByLabelText('Tutup sidebar');
+    fireEvent.click(closeBtn);
+    
+    expect(setIsOpen).toHaveBeenCalledWith(false);
+  });
+
+  it('calls setIsOpen when link is clicked', () => {
+    const setIsOpen = vi.fn();
+    renderWithProviders(<SidebarComponent isOpen={true} setIsOpen={setIsOpen} />);
+    
+    const link = screen.getByText('Profil Saya');
+    fireEvent.click(link);
+    
+    expect(setIsOpen).toHaveBeenCalledWith(false);
+  });
 });
 

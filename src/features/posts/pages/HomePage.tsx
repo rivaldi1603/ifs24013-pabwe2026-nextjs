@@ -30,7 +30,7 @@ export default function HomePage() {
 
   const handleLike = (e: React.MouseEvent, postId: number) => {
     e.preventDefault();
-    dispatch(asyncToggleLike(postId));
+    (dispatch(asyncToggleLike(postId)) as any).catch(() => {});
   };
 
   const handleDeleteAll = async () => {

@@ -22,6 +22,14 @@ describe('UsersPage', () => {
     expect(screen.getByText('Tidak ada pengguna')).toBeInTheDocument();
   });
 
+  it('should render correctly when state.users is undefined', () => {
+    renderWithProviders(<UsersPage />, {
+      preloadedState: { users: null } as any
+    });
+    
+    expect(screen.getByText('Tidak ada pengguna')).toBeInTheDocument();
+  });
+
   it('should render users when available', () => {
     const mockUsers = [
       { id: 1, name: 'Alice', email: 'a@a.com', created_at: '2023-01-01', avatar: 'http://img' },

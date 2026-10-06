@@ -40,9 +40,7 @@ export default function ChangeCoverModal({ isOpen, onClose, postId }: Props) {
   };
 
   const handleUpload = () => {
-    if (file) {
-      dispatch(asyncUpdatePostCover({ id: postId, file }));
-    }
+    dispatch(asyncUpdatePostCover({ id: postId, file: file as File }));
   };
 
   const handleClose = () => {

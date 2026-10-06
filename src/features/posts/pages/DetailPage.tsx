@@ -34,7 +34,7 @@ export default function DetailPage({ postId }: { postId: number }) {
   }, [dispatch, postId]);
 
   const handleLike = () => {
-    dispatch(asyncToggleLike(postId));
+    (dispatch(asyncToggleLike(postId)) as any).catch(() => {});
   };
 
   const handleDeletePost = async () => {

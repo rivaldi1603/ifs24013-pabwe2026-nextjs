@@ -45,6 +45,18 @@ describe('Auth Actions', () => {
       expect(dispatch).toHaveBeenCalledWith(reducer.setIsAuthLogin(false));
     });
 
+    it('should handle successful login with fallback token', async () => {
+      (authApi.loginApi as any).mockResolvedValue({
+        response: { ok: true },
+        data: { token: 'fallback-token' }
+      });
+
+      const action = asyncAuthLogin({ email: 'test@test.com', password: 'password' });
+      const result = await action(dispatch);
+      
+      expect(apiHelper.putAccessToken).toHaveBeenCalledWith('fallback-token');
+    });
+
     it('should handle failed login API response', async () => {
       (authApi.loginApi as any).mockResolvedValue({
         response: { ok: false },
@@ -55,6 +67,17 @@ describe('Auth Actions', () => {
       await expect(action(dispatch)).rejects.toThrow('Invalid credentials');
       
       expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Login Gagal', 'Invalid credentials');
+    });
+
+    it('should handle failed login API response with default message', async () => {
+      (authApi.loginApi as any).mockResolvedValue({
+        response: { ok: false },
+        data: {}
+      });
+
+      const action = asyncAuthLogin({ email: 'test@test.com', password: 'password' });
+      await expect(action(dispatch)).rejects.toThrow();
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Login Gagal', 'Terjadi kesalahan');
     });
 
     it('should handle API exception during login', async () => {
@@ -92,6 +115,17 @@ describe('Auth Actions', () => {
       
       expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Registrasi Gagal', 'Email already exists');
     });
+
+    it('should handle failed registration API response with default message', async () => {
+      (authApi.registerApi as any).mockResolvedValue({
+        response: { ok: false },
+        data: {}
+      });
+
+      const action = asyncAuthRegister({ name: 'Test', email: 'test@test.com', password: 'password' });
+      await expect(action(dispatch)).rejects.toThrow();
+      expect(toolsHelper.showErrorDialog).toHaveBeenCalledWith('Registrasi Gagal', 'Terjadi kesalahan');
+    });
   });
 
   describe('asyncAuthLogout', () => {
@@ -101,6 +135,14 @@ describe('Auth Actions', () => {
       
       expect(apiHelper.removeAccessToken).toHaveBeenCalled();
       expect(result).toBe(true);
+    });
+
+    it('should handle logout error', async () => {
+      (apiHelper.removeAccessToken as any).mockImplementation(() => {
+        throw new Error('Logout failed');
+      });
+      const action = asyncAuthLogout();
+      await expect(action(dispatch)).rejects.toThrow('Logout failed');
     });
   });
 });

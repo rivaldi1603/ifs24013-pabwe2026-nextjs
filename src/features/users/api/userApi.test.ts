@@ -16,6 +16,15 @@ describe('userApi', () => {
     }));
   });
 
+  it('should call fetchApi for getUsersApi without search', async () => {
+    (apiHelper.fetchApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
+    await getUsersApi();
+    expect(apiHelper.fetchApi).toHaveBeenCalledWith('/users', expect.objectContaining({
+      method: 'GET',
+      params: undefined,
+    }));
+  });
+
   it('should call fetchApi for getProfileApi', async () => {
     (apiHelper.fetchApi as any).mockResolvedValue({ response: { ok: true }, data: {} });
     await getProfileApi();

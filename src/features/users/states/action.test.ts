@@ -37,6 +37,14 @@ describe('Users Actions', () => {
       expect(dispatch).toHaveBeenCalledWith(reducer.setUsers([{ id: 1 }] as any));
     });
 
+    it('should handle undefined users data', async () => {
+      (userApi.getUsersApi as any).mockResolvedValue({ response: { ok: true }, data: { data: {} } });
+      const action = asyncGetUsers();
+      const result = await action(dispatch);
+      expect(result).toBeUndefined();
+      expect(dispatch).toHaveBeenCalledWith(reducer.setUsers([]));
+    });
+
     it('should handle fetch users failure', async () => {
       (userApi.getUsersApi as any).mockResolvedValue({ response: { ok: false }, data: { message: 'Error' } });
       const action = asyncGetUsers();

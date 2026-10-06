@@ -52,5 +52,34 @@ describe('NavbarComponent', () => {
     fireEvent.click(screen.getByText('Keluar'));
     expect(dispatchSpy).toHaveBeenCalled();
   });
+
+  it('handles dropdown close on outside click and link click', () => {
+    renderWithProviders(<NavbarComponent toggleSidebar={vi.fn()} />);
+    
+    const profileBtn = screen.getByRole('button', { name: /U/i });
+    fireEvent.click(profileBtn); // Open
+    expect(screen.getByText('Keluar')).toBeInTheDocument();
+    
+    // Click Profile link to close
+    const profileLink = screen.getByText('Profil Saya');
+    fireEvent.click(profileLink);
+    
+    expect(screen.queryByText('Keluar')).toBeNull();
+    
+    // Click again and test backdrop
+    fireEvent.click(profileBtn); // Open
+    const backdrop = document.querySelector('.fixed.inset-0.z-40') as HTMLElement;
+    fireEvent.click(backdrop);
+    
+    expect(screen.queryByText('Keluar')).toBeNull();
+  });
+
+  it('handles toggle sidebar click', () => {
+    const toggleSidebar = vi.fn();
+    renderWithProviders(<NavbarComponent toggleSidebar={toggleSidebar} />);
+    const toggleBtn = screen.getByLabelText('Toggle navigasi sidebar');
+    fireEvent.click(toggleBtn);
+    expect(toggleSidebar).toHaveBeenCalled();
+  });
 });
 
