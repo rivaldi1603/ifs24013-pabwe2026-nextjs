@@ -39,19 +39,17 @@ describe('PostLayout', () => {
   it('fetches profile if token exists but no profile', async () => {
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     
-    // We mock dispatch to return a resolved promise so the .then() block runs
-    const { store } = renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
+    renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
       preloadedState: { users: { profile: null } as any }
-    });
-    const dispatchSpy = vi.spyOn(store, 'dispatch').mockImplementation(() => {
-      return Promise.resolve() as any;
     });
     
     // Loading is initially shown
     expect(screen.getByText('Memuat Sesi...')).toBeInTheDocument();
     
+    // Wait for the API mock to be called and the loading screen to disappear
+    const userApi = await import('../../users/api/userApi');
     await waitFor(() => {
-      expect(dispatchSpy).toHaveBeenCalled();
+      expect(userApi.getProfileApi).toHaveBeenCalled();
     });
   });
 
