@@ -82,6 +82,27 @@ describe('RegisterPage', () => {
     });
   });
 
+  it('should handle submission error', async () => {
+    const { store } = renderWithProviders(<RegisterPage />);
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(store, 'dispatch').mockRejectedValue(new Error('Register error'));
+
+    fireEvent.change(screen.getByPlaceholderText('Nama Anda'), { target: { value: 'Test' } });
+    fireEvent.change(screen.getByPlaceholderText('nama@email.com'), { target: { value: 'test@test.com' } });
+    
+    const passwordInputs = screen.getAllByPlaceholderText('••••••••');
+    fireEvent.change(passwordInputs[0], { target: { value: 'password123' } });
+    fireEvent.change(passwordInputs[1], { target: { value: 'password123' } });
+    
+    const submitBtn = screen.getByRole('button', { name: /Daftar Sekarang/i });
+    const form = submitBtn.closest('form')!;
+    fireEvent.submit(form);
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith('Register failed:', expect.any(Error));
+    });
+  });
+
   it('should show loading state', () => {
     renderWithProviders(<RegisterPage />, {
       preloadedState: {

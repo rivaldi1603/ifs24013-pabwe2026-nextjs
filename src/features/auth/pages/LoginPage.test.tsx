@@ -67,6 +67,26 @@ describe('LoginPage', () => {
     });
   });
 
+  it('should handle submission error', async () => {
+    const { store } = renderWithProviders(<LoginPage />);
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(store, 'dispatch').mockRejectedValue(new Error('Login error'));
+
+    const emailInput = screen.getByPlaceholderText('nama@email.com');
+    const passwordInput = screen.getByPlaceholderText('••••••••');
+    const submitBtn = screen.getByRole('button', { name: /Masuk/i });
+
+    fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password' } });
+    
+    const form = submitBtn.closest('form')!;
+    fireEvent.submit(form);
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith('Login failed:', expect.any(Error));
+    });
+  });
+
   it('should show loading state', () => {
     renderWithProviders(<LoginPage />, {
       preloadedState: {

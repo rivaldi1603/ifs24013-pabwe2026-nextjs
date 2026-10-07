@@ -81,5 +81,19 @@ describe('NavbarComponent', () => {
     fireEvent.click(toggleBtn);
     expect(toggleSidebar).toHaveBeenCalled();
   });
+
+  it('handles logout error', async () => {
+    const { store } = renderWithProviders(<NavbarComponent toggleSidebar={vi.fn()} />);
+    vi.spyOn(store, 'dispatch').mockRejectedValue(new Error('Logout fail'));
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    fireEvent.click(screen.getByRole('button', { name: /U/i }));
+    fireEvent.click(screen.getByText('Keluar'));
+    
+    // Wait for the async function to throw and catch
+    await Promise.resolve();
+    
+    expect(consoleSpy).toHaveBeenCalledWith('Logout failed:', expect.any(Error));
+  });
 });
 

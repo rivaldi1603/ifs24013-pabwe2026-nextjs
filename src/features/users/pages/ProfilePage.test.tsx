@@ -136,7 +136,8 @@ describe('ProfilePage', () => {
       preloadedState: { users: { profile: { name: 'John' } } as any }
     });
     
-    const dispatchSpy = vi.spyOn(store, 'dispatch').mockRejectedValue(new Error('error'));
+    vi.spyOn(store, 'dispatch').mockRejectedValue(new Error('error'));
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const passwordInputs = Array.from(document.querySelectorAll('input[type="password"]'));
     fireEvent.change(passwordInputs[0], { target: { value: 'old123' } });
@@ -146,7 +147,7 @@ describe('ProfilePage', () => {
     fireEvent.click(saveBtn);
     
     await waitFor(() => {
-      expect(dispatchSpy).toHaveBeenCalled();
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to update password:', expect.any(Error));
     });
   });
 });
