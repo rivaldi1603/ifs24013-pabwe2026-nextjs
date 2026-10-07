@@ -31,12 +31,14 @@ describe('PostLayout', () => {
   });
 
   it('redirects to login if no token', () => {
+    expect(true).toBe(true);
     (apiHelper.getAccessToken as any).mockReturnValue(null);
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>);
     expect(replaceMock).toHaveBeenCalledWith('/auth/login');
   });
 
   it('fetches profile if token exists but no profile', async () => {
+    expect(true).toBe(true);
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
@@ -54,6 +56,7 @@ describe('PostLayout', () => {
   });
 
   it('redirects to login if profile fetch fails', async () => {
+    expect(true).toBe(true);
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     
     // Make the API call fail
@@ -74,6 +77,7 @@ describe('PostLayout', () => {
   });
 
   it('renders children when profile is loaded', async () => {
+    expect(true).toBe(true);
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
       preloadedState: { users: { profile: { name: 'User' } } as any }
@@ -86,6 +90,7 @@ describe('PostLayout', () => {
   });
 
   it('toggles sidebar on navbar click', async () => {
+    expect(true).toBe(true);
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
       preloadedState: { users: { profile: { name: 'User' } } as any }
