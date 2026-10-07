@@ -19,7 +19,7 @@ export default function RegisterPage() {
   
   const isAuthRegister = useAppSelector((state) => state.auth?.isAuthRegister || false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name || !email || !password || !passwordConfirm) {
       showWarningDialog('Form tidak lengkap', 'Silakan isi seluruh formulir pendaftaran.');
@@ -34,7 +34,9 @@ export default function RegisterPage() {
     try {
       await dispatch(asyncAuthRegister({ name, email, password }));
       router.push('/auth/login');
-    } catch (error) {}
+    } catch (error) {
+      console.error('Register failed:', error);
+    }
   };
 
   return (

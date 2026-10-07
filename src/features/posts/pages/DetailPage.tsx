@@ -46,17 +46,21 @@ export default function DetailPage({ postId }: { postId: number }) {
       try {
         await dispatch(asyncDeletePost(postId));
         router.push('/');
-      } catch (error) {}
+      } catch (error) {
+        console.error('Error deleting post:', error);
+      }
     }
   };
 
-  const handleAddComment = async (e: React.FormEvent) => {
+  const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!commentText.trim()) return;
     try {
       await dispatch(asyncAddComment({ id: postId, comment: commentText }));
       setCommentText('');
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
 
   const handleDeleteComment = async (commentId: number) => {
