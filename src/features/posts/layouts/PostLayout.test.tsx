@@ -50,7 +50,9 @@ describe('PostLayout', () => {
     // Loading is initially shown
     expect(screen.getByText('Memuat Sesi...')).toBeInTheDocument();
     
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(dispatchSpy).toHaveBeenCalled();
+    });
   });
 
   it('redirects to login if profile fetch fails', async () => {
@@ -80,7 +82,9 @@ describe('PostLayout', () => {
     });
     expect(screen.getByText('Child')).toBeInTheDocument();
     
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(screen.queryByText('Memuat Sesi...')).toBeNull();
+    });
   });
 
   it('toggles sidebar on navbar click', async () => {
@@ -94,7 +98,9 @@ describe('PostLayout', () => {
     // Click again to cover !isSidebarOpen
     fireEvent.click(toggleBtn);
     
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(screen.getByLabelText('Toggle navigasi sidebar')).toBeInTheDocument();
+    });
   });
 });
 
