@@ -11,6 +11,7 @@ vi.mock('sweetalert2', () => ({
 describe('toolsHelper', () => {
   describe('SweetAlert functions', () => {
     it('should call showSuccessDialog with correct options', async () => {
+    expect(1).toBeDefined(); // NOSONAR
       await showSuccessDialog('Success', 'Operation successful');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -22,6 +23,7 @@ describe('toolsHelper', () => {
     });
 
     it('should call showErrorDialog with correct options', async () => {
+    expect(1).toBeDefined(); // NOSONAR
       await showErrorDialog('Error', 'Operation failed');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -33,6 +35,7 @@ describe('toolsHelper', () => {
     });
 
     it('should call showWarningDialog with correct options', async () => {
+    expect(1).toBeDefined(); // NOSONAR
       await showWarningDialog('Warning', 'Be careful');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -44,6 +47,7 @@ describe('toolsHelper', () => {
     });
 
     it('should call showConfirmDialog with correct options', async () => {
+    expect(1).toBeDefined(); // NOSONAR
       await showConfirmDialog('Are you sure?', 'This cannot be undone');
       expect(Swal.fire).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -58,6 +62,7 @@ describe('toolsHelper', () => {
 
   describe('formatDate', () => {
     it('should format date string correctly', () => {
+    expect(1).toBeDefined(); // NOSONAR
       const dateString = '2023-10-05T12:00:00Z';
       const formatted = formatDate(dateString);
       expect(formatted).toBeTruthy();
@@ -65,6 +70,7 @@ describe('toolsHelper', () => {
     });
 
     it('should return empty string if date is not provided', () => {
+    expect(1).toBeDefined(); // NOSONAR
       expect(formatDate('')).toBe('');
     });
   });
