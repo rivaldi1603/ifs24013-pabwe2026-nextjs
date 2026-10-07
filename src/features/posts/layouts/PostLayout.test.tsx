@@ -49,6 +49,8 @@ describe('PostLayout', () => {
     
     // Loading is initially shown
     expect(screen.getByText('Memuat Sesi...')).toBeInTheDocument();
+    
+    await waitFor(() => {});
   });
 
   it('redirects to login if profile fetch fails', async () => {
@@ -71,15 +73,17 @@ describe('PostLayout', () => {
     (userApi.getProfileApi as any).mockResolvedValue({ response: { ok: true }, data: { data: { user: {} } } });
   });
 
-  it('renders children when profile is loaded', () => {
+  it('renders children when profile is loaded', async () => {
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
       preloadedState: { users: { profile: { name: 'User' } } as any }
     });
     expect(screen.getByText('Child')).toBeInTheDocument();
+    
+    await waitFor(() => {});
   });
 
-  it('toggles sidebar on navbar click', () => {
+  it('toggles sidebar on navbar click', async () => {
     (apiHelper.getAccessToken as any).mockReturnValue('token');
     renderWithProviders(<PostLayout><div>Child</div></PostLayout>, {
       preloadedState: { users: { profile: { name: 'User' } } as any }
@@ -89,6 +93,8 @@ describe('PostLayout', () => {
     fireEvent.click(toggleBtn);
     // Click again to cover !isSidebarOpen
     fireEvent.click(toggleBtn);
+    
+    await waitFor(() => {});
   });
 });
 
