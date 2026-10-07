@@ -7,7 +7,7 @@ import { asyncAuthLogout } from '../../auth/states/action';
 import { useRouter } from 'next/navigation';
 import { IconMenu2, IconLogout, IconUserCircle } from '@tabler/icons-react';
 
-export default function NavbarComponent({ toggleSidebar }: { toggleSidebar: () => void }) {
+export default function NavbarComponent({ toggleSidebar }: Readonly<{ toggleSidebar: () => void }>) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const profile = useAppSelector((state) => state.users?.profile);
@@ -17,7 +17,9 @@ export default function NavbarComponent({ toggleSidebar }: { toggleSidebar: () =
     try {
       await dispatch(asyncAuthLogout());
       router.push('/auth/login');
-    } catch (e) {}
+    } catch (e) {
+      console.error('Logout failed:', e);
+    }
   };
 
   return (
