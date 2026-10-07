@@ -57,7 +57,9 @@ export default function ProfilePage() {
       }));
       setOldPassword('');
       setNewPassword('');
-    } catch (e) {}
+    } catch (e) {
+      console.error('Failed to update password:', e);
+    }
   };
 
   const handlePhotoClick = () => {
