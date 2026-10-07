@@ -53,7 +53,7 @@ export default function SidebarComponent({ isOpen, setIsOpen }: Readonly<Sidebar
         <div className="h-full overflow-y-auto pt-6 pb-4 px-4 flex flex-col gap-2">
           {links.map((link) => {
             // Very simple active state matching
-            const isActive = pathname === link.href || (link.href === '/?tab=me' && typeof globalThis.window !== 'undefined' && globalThis.window.location.search === '?tab=me');
+            const isActive = pathname === link.href || (link.href === '/?tab=me' && globalThis.window?.location.search === '?tab=me');
             return (
               <Link
                 key={link.name}

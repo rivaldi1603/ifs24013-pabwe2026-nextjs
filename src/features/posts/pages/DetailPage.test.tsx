@@ -21,9 +21,11 @@ vi.mock('../../../helpers/toolsHelper', () => ({
 
 describe('DetailPage', () => {
   let backMock: any;
+  let pushMock: any;
   beforeEach(() => {
     backMock = vi.fn();
-    (navigation.useRouter as any).mockReturnValue({ back: backMock });
+    pushMock = vi.fn();
+    (navigation.useRouter as any).mockReturnValue({ back: backMock, push: pushMock });
     vi.clearAllMocks();
   });
 
