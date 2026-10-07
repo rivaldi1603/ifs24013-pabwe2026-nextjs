@@ -19,7 +19,7 @@ export default function RegisterPage() {
   
   const isAuthRegister = useAppSelector((state) => state.auth?.isAuthRegister || false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name || !email || !password || !passwordConfirm) {
       showWarningDialog('Form tidak lengkap', 'Silakan isi seluruh formulir pendaftaran.');

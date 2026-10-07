@@ -43,12 +43,12 @@ export default function ProfilePage() {
     }
   }, [profile]);
 
-  const handleUpdateProfile = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateProfile = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(asyncUpdateProfile({ name, bio }));
   };
 
-  const handleUpdatePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdatePassword = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await dispatch(asyncUpdateProfilePassword({ 

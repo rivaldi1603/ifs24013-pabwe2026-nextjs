@@ -52,7 +52,7 @@ export default function DetailPage({ postId }: { postId: number }) {
     }
   };
 
-  const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddComment = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!commentText.trim()) return;
     try {

@@ -18,7 +18,7 @@ export default function LoginPage() {
   // Safe default since Redux store might not be fully configured yet
   const isAuthLogin = useAppSelector((state) => state.auth?.isAuthLogin || false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !password) {
       showWarningDialog('Form tidak lengkap', 'Silakan isi email dan kata sandi Anda.');
