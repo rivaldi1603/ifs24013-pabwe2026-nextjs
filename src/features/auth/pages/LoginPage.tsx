@@ -43,8 +43,8 @@ export default function LoginPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-1">
-          <label htmlFor="login-email-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Email</label>
+        <label className="space-y-1 block">
+          <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1 block">Email</span>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-blue-500 transition-colors">
               <IconMail size={20} />
@@ -59,10 +59,10 @@ export default function LoginPage() {
               required
             />
           </div>
-        </div>
+        </label>
 
-        <div className="space-y-1">
-          <label htmlFor="login-password-input" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Kata Sandi</label>
+        <label className="space-y-1 block">
+          <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1 block">Kata Sandi</span>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-blue-500 transition-colors">
               <IconLock size={20} />
@@ -77,7 +77,7 @@ export default function LoginPage() {
               required
             />
           </div>
-        </div>
+        </label>
 
         <button
           id="login-submit-button"

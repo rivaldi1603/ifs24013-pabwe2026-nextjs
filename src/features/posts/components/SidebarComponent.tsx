@@ -24,10 +24,12 @@ export default function SidebarComponent({ isOpen, setIsOpen }: SidebarProps) {
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm lg:hidden transition-opacity" 
+        <button 
+          type="button"
+          className="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm lg:hidden transition-opacity w-full h-full border-none cursor-default" 
           onClick={() => setIsOpen(false)}
-        ></div>
+          aria-hidden="true"
+        ></button>
       )}
 
       {/* Sidebar container */}

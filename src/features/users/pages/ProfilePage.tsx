@@ -103,13 +103,14 @@ export default function ProfilePage() {
                 )}
                 
                 {/* Upload Overlay */}
-                <div 
+                <button 
+                  type="button"
                   onClick={handlePhotoClick}
-                  className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer"
+                  className="absolute inset-0 w-full h-full border-none bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
                 >
                   <IconCamera size={24} className="mb-1" />
                   <span className="text-xs font-medium">Ubah Foto</span>
-                </div>
+                </button>
               </div>
               
               {isChangeProfilePhoto && (
@@ -142,8 +143,8 @@ export default function ProfilePage() {
             </div>
             
             <form onSubmit={handleUpdateProfile} className="p-6 space-y-5">
-              <div className="space-y-1">
-                <label htmlFor="profile-name" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Nama Lengkap</label>
+              <label className="space-y-1 block">
+                <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1 block">Nama Lengkap</span>
                 <input
                   id="profile-name"
                   type="text"
@@ -152,10 +153,10 @@ export default function ProfilePage() {
                   className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white outline-none transition-all"
                   required
                 />
-              </div>
+              </label>
               
-              <div className="space-y-1">
-                <label htmlFor="profile-bio" className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1">Bio</label>
+              <label className="space-y-1 block">
+                <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300 ml-1 block">Bio</span>
                 <textarea
                   id="profile-bio"
                   value={bio}
@@ -164,7 +165,7 @@ export default function ProfilePage() {
                   className="w-full px-4 py-2.5 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white outline-none transition-all resize-none"
                   placeholder="Ceritakan sedikit tentang diri Anda..."
                 ></textarea>
-              </div>
+              </label>
 
               <div className="flex justify-end pt-2">
                 <button

@@ -62,7 +62,8 @@ export default function ChangeCoverModal({ isOpen, onClose, postId }: Props) {
         </div>
 
         <div className="mb-6">
-          <div 
+          <button 
+            type="button"
             onClick={() => fileInputRef.current?.click()}
             className={`w-full h-64 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-colors ${preview ? 'border-blue-500' : 'border-neutral-300 dark:border-neutral-700 hover:border-blue-400 dark:hover:border-blue-500 bg-neutral-50 dark:bg-neutral-800/50'}`}
           >
@@ -75,7 +76,7 @@ export default function ChangeCoverModal({ isOpen, onClose, postId }: Props) {
                 <p className="text-xs text-neutral-500 mt-1">PNG, JPG atau WEBP (Max. 5MB)</p>
               </>
             )}
-          </div>
+          </button>
           <input 
             type="file" 
             ref={fileInputRef} 

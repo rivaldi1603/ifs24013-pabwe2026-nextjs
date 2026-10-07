@@ -59,10 +59,13 @@ export default function NavbarComponent({ toggleSidebar }: { toggleSidebar: () =
 
               {isDropdownOpen && (
                 <>
-                  <div 
-                    className="fixed inset-0 z-40" 
+                  <button 
+                    type="button"
+                    className="fixed inset-0 z-40 w-full h-full border-none bg-transparent cursor-default focus:outline-none" 
                     onClick={() => setIsDropdownOpen(false)}
-                  ></div>
+                    aria-hidden="true"
+                    tabIndex={-1}
+                  ></button>
                   <div className="absolute right-0 mt-2 w-48 rounded-xl shadow-lg bg-white dark:bg-neutral-800 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden transform origin-top-right transition-all animation-fade-in py-1">
                     <Link 
                       href="/profile" 
