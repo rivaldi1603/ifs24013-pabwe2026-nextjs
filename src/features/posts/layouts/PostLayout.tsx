@@ -8,7 +8,7 @@ import { asyncGetProfile } from '../../users/states/action';
 import NavbarComponent from '../components/NavbarComponent';
 import SidebarComponent from '../components/SidebarComponent';
 
-export default function PostLayout({ children }: { children: React.ReactNode }) {
+export default function PostLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
