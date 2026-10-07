@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAccessToken } from '../../../helpers/apiHelper';
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
 
@@ -53,7 +53,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <div className="flex -space-x-4">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className={`w-10 h-10 rounded-full border-2 border-neutral-900 bg-neutral-700 flex items-center justify-center text-xs font-bold z-${30 - i * 10}`}>
-                    {String.fromCharCode(64 + i)}
+                    {String.fromCodePoint(64 + i)}
                   </div>
                 ))}
               </div>
