@@ -9,7 +9,7 @@ import {
   asyncUpdateProfilePhoto, 
   asyncUpdateProfilePassword 
 } from '../states/action';
-import { IconUser, IconCamera, IconLock, IconCheck, IconUpload } from '@tabler/icons-react';
+import { IconUser, IconCamera, IconLock, IconCheck } from '@tabler/icons-react';
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();

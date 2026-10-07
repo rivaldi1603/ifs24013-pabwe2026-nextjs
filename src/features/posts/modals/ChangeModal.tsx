@@ -13,7 +13,7 @@ interface Props {
   initialDescription: string;
 }
 
-export default function ChangeModal({ isOpen, onClose, postId, initialDescription }: Props) {
+export default function ChangeModal({ isOpen, onClose, postId, initialDescription }: Readonly<Props>) {
   const dispatch = useAppDispatch();
   const [description, onDescriptionChange, setDescription] = useInput('');
   

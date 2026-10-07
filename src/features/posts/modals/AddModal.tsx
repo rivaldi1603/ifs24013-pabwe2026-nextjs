@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function AddModal({ isOpen, onClose }: Props) {
+export default function AddModal({ isOpen, onClose }: Readonly<Props>) {
   const dispatch = useAppDispatch();
   const [description, onDescriptionChange, setDescription] = useInput('');
   

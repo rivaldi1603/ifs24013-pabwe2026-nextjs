@@ -24,15 +24,15 @@ export default function PostLayout({ children }: Readonly<{ children: React.Reac
     }
 
     // Load profile if not loaded
-    if (!profile) {
+    if (profile) {
+      setIsChecking(false);
+    } else {
       (dispatch(asyncGetProfile()) as any)
         .then(() => setIsChecking(false))
         .catch(() => {
           // If profile fetch fails (e.g. token expired), redirect to login
           router.replace('/auth/login');
         });
-    } else {
-      setIsChecking(false);
     }
   }, [router, dispatch, profile]);
 

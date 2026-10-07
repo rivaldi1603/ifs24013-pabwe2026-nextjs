@@ -222,6 +222,7 @@ describe('DetailPage', () => {
     // Close edit modal
     await waitFor(() => {
       const closeEdit = screen.getByText('Batal', { selector: 'button' });
+      expect(closeEdit).toBeInTheDocument();
       fireEvent.click(closeEdit);
     });
     
@@ -231,6 +232,7 @@ describe('DetailPage', () => {
     // Close cover modal
     await waitFor(() => {
       const closeCover = screen.getAllByText('Batal', { selector: 'button' })[0];
+      expect(closeCover).toBeInTheDocument();
       fireEvent.click(closeCover);
     });
   });

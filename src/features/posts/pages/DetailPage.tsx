@@ -17,7 +17,7 @@ import dynamic from 'next/dynamic';
 const ChangeModal = dynamic(() => import('../modals/ChangeModal'), { ssr: false });
 const ChangeCoverModal = dynamic(() => import('../modals/ChangeCoverModal'), { ssr: false });
 
-export default function DetailPage({ postId }: { postId: number }) {
+export default function DetailPage({ postId }: Readonly<{ postId: number }>) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const post = useAppSelector(state => state.posts?.post);

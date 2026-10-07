@@ -144,6 +144,7 @@ describe('Posts Actions', () => {
       (postApi.toggleLikeApi as any).mockResolvedValue({ response: { ok: true }, data: { success: true } });
       const action = asyncToggleLike(1);
       await action(dispatch);
+      expect(dispatch).toHaveBeenCalled();
     });
 
     it('should handle toggle like failure', async () => {
@@ -162,6 +163,7 @@ describe('Posts Actions', () => {
       });
       const action = asyncAddComment({ id: 1, comment: 'Test' });
       await action(dispatch);
+      expect(dispatch).toHaveBeenCalled();
     });
 
     it('should handle add comment failure', async () => {
@@ -181,6 +183,7 @@ describe('Posts Actions', () => {
       });
       const action = asyncDeleteComment({ postId: 1, commentId: 1 });
       await action(dispatch);
+      expect(dispatch).toHaveBeenCalled();
     });
 
     it('should handle delete comment failure', async () => {

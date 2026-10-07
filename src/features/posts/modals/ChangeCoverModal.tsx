@@ -11,7 +11,7 @@ interface Props {
   postId: number;
 }
 
-export default function ChangeCoverModal({ isOpen, onClose, postId }: Props) {
+export default function ChangeCoverModal({ isOpen, onClose, postId }: Readonly<Props>) {
   const dispatch = useAppDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
   

@@ -129,14 +129,20 @@ describe('HomePage', () => {
     
     await waitFor(() => {
       const closeBtn = screen.getByText('Batal', { selector: 'button' });
+      expect(closeBtn).toBeInTheDocument();
       fireEvent.click(closeBtn);
     });
   });
 
-  it('opens add modal from empty state button', () => {
+  it('opens add modal from empty state button', async () => {
     renderWithProviders(<HomePage />, { preloadedState: { posts: { posts: [] } as any } });
     const addBtn = screen.getByText('Buat Postingan Baru');
     fireEvent.click(addBtn);
+    
+    await waitFor(() => {
+      const modalTitle = screen.getByText('Buat Postingan Baru', { selector: 'h3' });
+      expect(modalTitle).toBeInTheDocument();
+    });
   });
 });
 

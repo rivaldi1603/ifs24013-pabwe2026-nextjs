@@ -1,20 +1,20 @@
 import { DELCOM_BASEURL } from '../lib/config';
 
 export function getAccessToken(): string | null {
-  if (typeof window !== 'undefined') {
+  if (typeof globalThis.window !== 'undefined') {
     return localStorage.getItem('accessToken');
   }
   return null;
 }
 
 export function putAccessToken(token: string): void {
-  if (typeof window !== 'undefined') {
+  if (typeof globalThis.window !== 'undefined') {
     localStorage.setItem('accessToken', token);
   }
 }
 
 export function removeAccessToken(): void {
-  if (typeof window !== 'undefined') {
+  if (typeof globalThis.window !== 'undefined') {
     localStorage.removeItem('accessToken');
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { asyncGetUsers } from '../states/action';
 import { IconSearch, IconUser, IconCalendar } from '@tabler/icons-react';
