@@ -6,9 +6,11 @@ import { asyncGetUsers } from '../states/action';
 import { IconSearch, IconUser, IconCalendar } from '@tabler/icons-react';
 import { formatDate } from '../../../helpers/toolsHelper';
 
+const EMPTY_USERS: any[] = [];
+
 export default function UsersPage() {
   const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => state.users?.users || []);
+  const users = useAppSelector((state) => state.users?.users || EMPTY_USERS);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Debounce logic for searching

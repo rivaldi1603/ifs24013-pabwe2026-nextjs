@@ -9,13 +9,14 @@ import { IconSearch, IconHeartFilled, IconHeart, IconMessageCircle, IconPlus, Ic
 import { formatDate, showConfirmDialog } from '../../../helpers/toolsHelper';
 import dynamic from 'next/dynamic';
 const AddModal = dynamic(() => import('../modals/AddModal'), { ssr: false });
+const EMPTY_POSTS: any[] = [];
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const tab = searchParams.get('tab');
   const isMe = tab === 'me';
   
-  const posts = useAppSelector(state => state.posts?.posts || []);
+  const posts = useAppSelector(state => state.posts?.posts || EMPTY_POSTS);
   const isPost = useAppSelector(state => state.posts?.isPost || false);
   
   const [searchQuery, setSearchQuery] = useState('');
