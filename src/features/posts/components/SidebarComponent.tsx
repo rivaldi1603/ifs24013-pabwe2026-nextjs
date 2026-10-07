@@ -26,6 +26,7 @@ export default function SidebarComponent({ isOpen, setIsOpen }: SidebarProps) {
       {isOpen && (
         <button 
           type="button"
+          tabIndex={-1}
           className="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm lg:hidden transition-opacity w-full h-full border-none cursor-default" 
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
