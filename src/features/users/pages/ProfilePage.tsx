@@ -35,8 +35,10 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (profile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(profile.name || '');
       // Bio handling if backend supports it; falling back to empty string
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect
       setBio((profile as any).bio || '');
     }
   }, [profile]);

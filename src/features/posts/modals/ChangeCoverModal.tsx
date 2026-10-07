@@ -24,7 +24,9 @@ export default function ChangeCoverModal({ isOpen, onClose, postId }: Props) {
   useEffect(() => {
     if (isPostChangedCover) {
       dispatch(resetPostStatus());
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFile(null);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreview(null);
       onClose();
     }

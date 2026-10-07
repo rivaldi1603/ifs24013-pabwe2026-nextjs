@@ -54,7 +54,7 @@ describe('apiHelper', () => {
 
     it('should handle getAccessToken when window is undefined', () => {
       const originalWindow = global.window;
-      // @ts-ignore
+      // @ts-expect-error
       delete global.window;
       expect(getAccessToken()).toBeNull();
       global.window = originalWindow;
@@ -62,7 +62,7 @@ describe('apiHelper', () => {
 
     it('should handle putAccessToken when window is undefined', () => {
       const originalWindow = global.window;
-      // @ts-ignore
+      // @ts-expect-error
       delete global.window;
       expect(() => putAccessToken('token')).not.toThrow();
       global.window = originalWindow;
@@ -70,7 +70,7 @@ describe('apiHelper', () => {
     
     it('should handle removeAccessToken when window is undefined', () => {
       const originalWindow = global.window;
-      // @ts-ignore
+      // @ts-expect-error
       delete global.window;
       expect(() => removeAccessToken()).not.toThrow();
       global.window = originalWindow;
